@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dapur Ibu - Teman Ibu</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body {
+  background: linear-gradient(to bottom, #FFEACF 0%, #FFF2E1 100%);
+  font-family: 'Quicksand', sans-serif;
+  color: #6B645C;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* HEADER */
+.header {
+  background-color: #FFDAEA;
+  background-image: url('BG2.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  padding: 20px 0;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 218, 234, 0.6);
+  z-index: 0;
+}
+
+.header img { 
+  position: relative; 
+  z-index: 1; 
+}
+
+/* NAVBAR */
+.navbar-custom {
+  background-color: #FFF2E1;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-custom a { 
+  margin: 0 35px; 
+}
+
+.navbar-custom img { 
+  width: 170px; 
+  height: 90px; 
+  transition: transform 0.3s ease, filter 0.3s ease; 
+}
+
+.navbar-custom img:hover { 
+  transform: translateY(-5px) scale(1.05); 
+  filter: brightness(1.1); 
+}
+
+/* SECTION */
+.content-section {
+  position: relative;
+  padding: 60px 0;
+  overflow: hidden;
+}
+.content-section::before {
+  content: "";
+  background: url('BG1.svg') repeat center/cover;
+  opacity: 0.25;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.content-section > * { 
+  position: relative; 
+  z-index: 1; 
+}
+
+.container {
+  max-width: 1000px;
+  background: rgba(255, 248, 242, 0.95);
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  position: relative;
+  z-index: 2; /* wajib agar di atas BG1.svg */
+}
+
+.section-title {
+  font-size: 36px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #E78EA9, #F5CBA7);
+  background-clip: text;              /* versi standar */
+  -webkit-background-clip: text;      /* untuk Chrome, Safari, Edge */
+  color: transparent;                 /* versi standar */
+  -webkit-text-fill-color: transparent; /* untuk WebKit */
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.section-title .highlight {
+  color: #D17C7C;
+  -webkit-text-fill-color: #D17C7C;
+  background: none;
+}
+
+.title-underline {
+  width: 120px;
+  height: 4px;
+  background: linear-gradient(90deg, #E78EA9, #F5CBA7);
+  margin: 0 auto 25px auto;
+  border-radius: 4px;
+  opacity: 0.8;
+}
+
+.section-desc {
+  color: #6B645C;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ANIMASI */
+.fade-up { 
+  opacity: 0; 
+  transform: translateY(30px); 
+  transition: all 0.9s ease; 
+}
+
+.fade-up.visible { 
+  opacity: 1; 
+  transform: translateY(0); 
+}
+
+/* SEARCH */
+.search-bar { 
+  text-align: center;
+  margin-bottom: 30px; 
+}
+
+.search-bar input {
+  width: 60%;
+  max-width: 680px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+/* LIST MASAKAN */
+#recipeList { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 25px; 
+}
+
+/* CARD MASAKAN */
+.recipe-card {
+  background: #fffdf8;
+  border-radius: 15px;
+  padding: 15px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.recipe-card:hover { 
+  transform: translateY(-4px); 
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08); 
+}
+
+.recipe-card img {
+  width: 180px;
+  height: auto;
+  flex-shrink: 0;
+  border-radius: 12px;
+  display: block;
+}
+
+.recipe-info {
+  flex: 1;
+  text-align: left;
+}
+
+.recipe-title {
+  font-weight: 700;
+  font-size: 18px;
+  color: #D17C7C;
+  margin-bottom: 8px;
+}
+
+.recipe-details {
+  display: none;
+  background: #fffaf5;
+  border-radius: 10px;
+  padding: 10px 15px;
+  border: 1px solid #f5d4c4;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .recipe-card { flex-direction: column; 
+    text-align: center; 
+  }
+
+  .recipe-card img { 
+    width: 100%; 
+    max-width: 280px; 
+    margin-bottom: 10px; 
+  }
+
+  .recipe-info { 
+    text-align: center; 
+  }
+}
+
+/* FOOTER */
+footer {
+  background: #FFEACF;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: 70px;
+  position: relative;
+}
+
+footer img { 
+  max-width: 100%; 
+}
+
+footer .social-icons a {
+  margin: 0 15px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+footer .social-icons a:hover { 
+  transform: scale(1.2); 
+}
+
+</style>
+</head>
+
+<body>
+<!-- HEADER -->
+<div class="header">
+  <a href="index.html">
+    <img src="LOGO HEADER.svg" alt="Logo Header" width="78" height="78">
+  </a>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar-custom">
+  <a href="TENTANG.html"><img src="Tentang Teman Ibu - OFF.svg" data-hover="Tentang Teman Ibu - ON.svg" alt=""></a>
+  <a href="HEMAT YUK!.html"><img src="Hemat Yuk! - OFF.svg" data-hover="Hemat Yuk! - ON.svg" alt=""></a>
+  <a href="ATUR UANGKU.html"><img src="Atur Uangku - OFF.svg" data-hover="Atur Uangku - ON.svg" alt=""></a>
+  <a href="RUANG KELUARGA.html"><img src="Ruang Keluarga - OFF.svg" data-hover="Ruang Keluarga - ON.svg" alt=""></a>
+  <a href="DAPUR IBU.html"><img src="Dapur Ibu - ON.svg" alt=""></a>
+</nav>
+
+<!-- KONTEN -->
+<section class="content-section fade-up">
+  <div class="container fade-up text-center">
+    <h2 class="section-title fade-up">Selamat Datang di <span class="highlight">Dapur Ibu!</span></h2>
+    <div class="title-underline fade-up"></div>
+    <p class="section-desc fade-up">
+      Temukan berbagai resep masakan <b>sehat</b> dan <b>lezat</b> sesuai bahan yang kamu miliki di rumah.
+      Tulis bahan di kolom pencarian untuk menemukan menu yang paling cocok untuk keluarga tercinta.
+    </p>
+
+<div class="search-bar fade-up mt-4">
+  <input type="text" id="searchInput" placeholder="Ketik bahan masakan di sini...">
+</div>
+
+<div id="recipeList" class="fade-up">
+</div>
+
+  </div>
+</section>
+
+
+
+<!-- FOOTER -->
+<footer class="mt-5">
+  <img src="Footer.svg" alt="Footer" usemap="#Map">
+  <map name="Map">
+    <area shape="rect" coords="849,78,906,133" href="https://www.instagram.com/" target="_blank" alt="-">
+    <area shape="rect" coords="1041,79,1118,136" href="https://www.youtube.com" target="_blank" alt="-">
+    <area shape="rect" coords="846,155,907,211" href="https://x.com" target="_blank" alt="-">
+    <area shape="rect" coords="1048,152,1116,210" href="https://facebook.com" target="_blank" alt="-">
+  </map>
+	
+  <div class="social-icons mt-3">
+    <a href="https://www.instagram.com/" target="_blank"><img src="instagram.png" alt="Instagram" width="40"></a>
+    <a href="https://www.youtube.com/" target="_blank"><img src="youtube.png" alt="YouTube" width="40"></a>
+    <a href="https://x.com/" target="_blank"><img src="twitter.png" alt="Twitter" width="40"></a>
+    <a href="https://web.facebook.com/" target="_blank"><img src="facebook.png" alt="Facebook" width="40"></a>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const recipes = [
+    { name: "Ikan Panggang Lemon Rendah Kalori", 
+      image: "ikan panggang lemon.svg", 
+      bahan: "ikan, lemon, bawang putih, minyak zaitun, dauh kemangi", 
+      resep: `Bahan-bahan:
+<br> 2 potong ikan (bisa menggunakan ikan kakap, salmon, atau jenis ikan putih lainnya)
+<br> 1 buah lemon, peras airnya
+<br> 2 siung bawang putih, cincang halus
+<br> 1 sdt lada hitam bubuk
+<br> 1/2 sdt garam
+<br> Beberapa lembar daun kemangi segar (opsional)
+<br> Minyak zaitun secukupnya (untuk melumuri ikan)
+<br>
+<br>
+Cara Membuat:
+<br> 1. Lumuri kedua sisi ikan dengan perasan air lemon, bawang putih cincang, lada hitam, dan garam.
+<br> 2. Diamkan selama minimal 15 menit agar bumbu meresap.
+<br> 3. Panaskan oven dengan suhu 200°C.
+<br> 4. Letakkan ikan pada loyang yang sudah dilapisi kertas baking.
+<br> 5. Olesi permukaan ikan dengan sedikit minyak zaitun.
+<br> 6. Panggang selama 15-20 menit, atau hingga ikan matang dan dagingnya berwarna putih buram.
+<br> 7. Angkat ikan dari oven dan tata di atas piring saji.
+<br> 8. Taburi dengan daun kemangi segar cincang (jika suka).
+<br> 9. Sajikan selagi hangat dengan nasi merah atau sayuran kukus.`
+    },
+
+    { name: "Beef Teriyaki", 
+      image: "beef teriyaki.svg", 
+      bahan: "daging sapi, bawang, kecap manis, saus tiram, mirin", 
+      resep: `Bahan-bahan:
+<br> 500 gram daging sapi has dalam, iris tipis melintang serat
+<br> 1 buah bawang bombay, iris-iris
+<br> 2 siung bawang putih, cincang halus
+<br> 1 sdm minyak wijen
+<br> 4 sdm kecap manis Less Sugar Bango
+<br> 2 sdm saus tiram
+<br> 1 sdm mirin
+<br> 1 sdt lada hitam bubuk
+<br> 1/2 sdt garam
+<br> Sedikit air
+<br>
+<br>
+Cara Membuat:
+<br> 1. Campurkan daging sapi dengan bawang putih cincang, kecap manis Less Sugar Bango, saus tiram, mirin, lada hitam, dan garam. Aduk rata dan diamkan minimal 30 menit dalam kulkas agar bumbu meresap.
+<br> 2. Panaskan minyak wijen dalam wajan, tumis bawang bombay hingga harum dan layu.
+<br> 3. Masukkan daging yang sudah dimarinasi beserta bumbunya ke dalam wajan. Masak dengan api sedang sambil dibolak-balik hingga daging berubah warna dan matang.
+<br> 4. Jika daging terlihat kering, tambahkan sedikit air agar saus teriyaki lebih mengental. Masak hingga saus mengental dan meresap ke dalam daging.
+<br> 5. Angkat dan sajikan beef teriyaki selagi hangat.`
+    },
+
+    { name: "Tumis Buncis Tempe", 
+      image: "tumis buncis tempe.svg", 
+      bahan: "buncis, tempe, bawang putih, kecap manis, lengkuas, daun salam", 
+      resep: `Bahan-bahan:
+<br> 250 gr buncis, potong serong 3 cm
+<br> 3 siung bawang putih, iris tipis
+<br> 2 sdm kecap manis Less Sugar Bango
+<br> 2 cm lengkuas
+<br> 2 lembar daun salam
+<br> 1/2 sdt garam, merica
+<br> 50 ml air
+<br> 2 sdm minyak
+<br>
+<br>
+Cara Membuat:
+<br> 1. Panaskan minyak, tumis bawang putih hingga harum. Masukkan lengkuas dan daun salam, tumis sebentar.
+<br> 2. Masukkan buncis, air, gula, garam, merica dan kecap manis Less Sugar Bango. Aduk rata.
+<br> 3. Lanjutkan memasak hingga buncis matang. Angkat.
+<br> 4. Sajikan tumis buncis tempe dengan nasi hangat.`
+    },
+
+    { name: "Tofu Scramble", 
+      image: "tofu scramble.svg", 
+      bahan: "tahu, bawang bombay, bawang putih, kunyit, sayuran, saus tiram", 
+      resep: `Bahan-bahan:
+<br> 200 gram tahu putih, hancurkan menggunakan garpu
+<br> 1 buah bawang bombay, cincang halus
+<br> 1 siung bawang putih, cincang halus
+<br> 1/2 sendok teh kunyit bubuk
+<br> 1/4 sendok teh lada hitam
+<br> Sejumput garam
+<br> 1 sendok makan minyak zaitun
+<br> Sayuran pilihan (seperti bayam, paprika, atau jagung), potong-potong
+<br> 1 sdt saus tiram
+<br> 1 sdt kecap manis Less Sugar Bango
+<br>
+<br>
+Cara Membuat:
+<br> 1. Panaskan minyak zaitun dalam wajan anti lengket dengan api sedang.
+<br> 2. Tumis bawang bombay dan bawang putih hingga harum dan layu.
+<br> 3. Masukkan tahu yang sudah dihancurkan ke dalam wajan, aduk rata.
+<br> 4. Tambahkan kunyit bubuk, lada hitam, dan garam. Aduk hingga bumbu meresap.
+<br> 5. Masukkan sayuran yang sudah dipotong-potong. Tumis hingga sayuran layu.
+<br> 6. Aduk terus agar tahu tidak gosong dan menjadi butiran-butiran kecil seperti telur orak-arik.
+<br> 7. Tambahkan saos tiram dan kecap manis Less Sugar Bango.
+<br> 8. Angkat dan sajikan tofu scramble hangat dengan roti gandum atau nasi merah.`
+    },
+
+    { name: "Ayam Kemangi", 
+      image: "ayam kemangi.svg", 
+      bahan: "ayam, daun kemangi, tomat, bawang, kecap manis, saus tiram", 
+      resep: `Bahan-bahan:
+<br> 400 gr fillet dada ayam tanpa kulit
+<br> 4 ikat daun kemangi
+<br> 1 lembar daun jeruk
+<br> 1 buah tomat merah
+<br> 1 sdm saus tiram
+<br> 2 sdm kecap manis Less Sugar Bango
+<br> 1/2 sdt diabetasol sweetener
+<br> garam dan merica secukupnya
+<br> Bumbu Halus
+<br> 8 siung bawang merah
+<br> 4 siung bawang putih
+<br> 1/2 buah cabai merah keriting
+<br> 1/4 sdt ketumbar bubuk
+<br>
+<br>
+Cara Membuat:
+<br> 1. Tumis bawang merah dan bawang putih hingga harum.
+<br> 2. Masukan ayam, masak hingga ayam matang.
+<br> 3. Masukan cabe, tumis hingga cabe sedikit layu.
+<br> 4. Masukkan tomat.
+<br> 5. Masukan kecap manis Less Sugar Bango, saos tiram, garam, lada, diabetasol aduk hingga rata, test rasa.
+<br> 6. Masukan daun kemangi, masak hingga layu.
+<br> 7. Periksa rasa dan sajikan ayam kemangi dengan nasi hangat.`
+    },
+
+    { name: "Salad Sayuran dengan Vinaigrette", 
+      image: "salad sayur.svg", 
+      bahan: "selada romaine, timun, wortel, tomat, bawang bombay merah, kacang polong, alpukat", 
+      resep: `Bahan-bahan:
+<br> Sayuran:
+<br> Selada romaine, robek-robek
+<br> Timun, potong dadu
+<br> Wortel, parut atau potong tipis
+<br> Tomat ceri, belah dua
+<br> Bawang bombay merah, iris tipis
+<br> Kacang polong, potong-potong (opsional)
+<br> Alpukat, potong dadu (opsional)
+<br>
+<br>
+Vinaigrette:
+<br> Minyak zaitun 
+<br> Cuka balsamic atau cuka apel
+<br>Madu
+<br> Garam
+<br> Lada hitam bubuk
+<br> Dijon mustard (opsional)
+<br>
+<br>
+Cara Membuat:
+<br> 1. Cuci bersih semua sayuran.
+<br> 2. Potong-potong sayuran sesuai selera.
+<br> 3. Tata sayuran di dalam mangkuk besar.
+<br> 4. Dalam botol kecil atau mangkuk, campurkan semua bahan vinaigrette.
+<br> 5. Kocok atau aduk rata hingga semua bahan tercampur sempurna.
+<br> 6. Rasakan dan sesuaikan rasa dengan menambahkan garam, lada, atau bahan lainnya sesuai selera.
+<br> 7. Siram sayuran dengan vinaigrette.
+<br> 8. Aduk rata hingga semua sayuran terbalut dengan dressing.
+<br> 9. Sajikan salad segera atau simpan di kulkas untuk dinikmati nanti.`
+    },
+
+    { name: "Gado-gado", 
+      image: "gado-gado.svg", 
+      bahan: "kentang, tahu putih, tempe, selada hijau, timun, tauge, kol, ketumbar", 
+      resep: `Bahan-bahan:
+<br> 350 g kentang, kukus, kupas, potong-potong
+<br> 350 g tahu putih
+<br> 350 g tempe
+<br> 7 lembar daun selada hijau, sobek-sobek
+<br> 2 buah mentimun, iris tipis
+<br> 100 g tauge, rebus
+<br> 200 g kol, iris kasar, rebus
+<br> minyak goreng, untuk menumis dan menggoreng
+<br> Bumbu perendam tahu-tempe, aduk rata:
+<br> 3 siung bawang putih, halus
+<br> 1 sdt ketumbar bubuk
+<br> 1 sdt garam
+<br> 200 ml air
+<br>
+<br>
+Bumbu kacang:
+<br> 200 g kacang tanah kulit, goreng, haluskan
+<br> 3 buah daun jeruk, buang tulang daunnya
+<br> 2 sdm kecap manis Less Sugar Bango
+<br> 1 sdt garam
+<br> 3 sdt gula merah
+<br> 300 ml santan encer
+<br> 300 ml air
+<br> 1 sdt asam jawa, larutkan dengan 2 sdm air
+<br>
+<br>
+Bumbu halus:
+<br> 5 buah cabai merah besar, buang biji
+<br> 3 buah cabai merah keriting
+<br> 5 cm kencur
+<br> 4 siung bawang putih
+<br> 1/2 sdt terasi goreng
+<br>
+<br>
+Pelengkap:
+<br> 6 buah telur rebus, kupas, potong-potong
+<br> 2 buah tomat, potong-potong
+<br> 3 sdm bawang merah goreng
+<br> kerupuk dan emping
+<br>
+<br>
+Cara Membuat:
+<br> 1. Aduk rata tempe dan tahu bersama bumbu perendam. Sisihkan.
+<br> 2. Panaskan minyak, goreng tahu dan tempe hingga garing dan matang. Angkat dan tiriskan. Sisihkan.
+<br> 3. Bumbu kacang: Panaskan 3 sdm minyak, tumis bumbu halus dan daun jeruk hingga harum. Masukkan kacang tanah dan kecap manis Less Sugar Bango, aduk rata. Tambahkan sisa semua bahan, aduk. Masak hingga matang. Angkat. Biarkan hingga tidak panas.
+<br> 4. Tata kentang, tahu, tempe, daun selada, ketimun, taoge, dan kol di atas piring saji. Tuang bumbu kacang dan taburi bawang merah goreng. Sajikan gado-gado dengan pelengkap.`
+    },
+
+    { name: "Pecel Sayur", 
+      image: "pecel sayur.svg", 
+      bahan: "kacang tanah, bawang merah, bawang putih, cabai rawit, cabai keriting, kencur, daun jeruk, air asam jawa, kangkung, bayam, tauge, toge, buncis, labu siam, kacang panjang, tempe, tahu, kerupuk, kecap manis, nasi", 
+      resep: `Bahan-bahan:
+<br> 200 gram kacang tanah goreng
+<br> 5 siung bawang merah
+<br> 3 siung bawang putih
+<br> 10 cabai rawit merah (sesuai selera)
+<br> 5 cabai merah keriting (sesuai selera)
+<br> 2 cm kencur
+<br> 2 lembar daun jeruk
+<br> Garam secukupnya
+<br> Gula merah secukupnya
+<br> Air asam jawa secukupnya
+<br>
+<br>
+Sayuran Rebus:
+<br> Kangkung
+<br> Bayam
+<br> Toge
+<br> Buncis
+<br> Labu siam
+<br> Kacang panjang
+<br> Tempe goreng
+<br> Tahu goreng
+<br> Kerupuk (optional)
+<br>
+<br>
+Pelengkap:
+<br> Kecap manis Less Sugar Bango
+<br> Nasi putih hangat
+<br>
+<br>
+Cara Membuat:
+<br> 1. Sangrai kacang tanah, bawang merah, bawang putih, cabai, kencur, dan daun jeruk hingga harum dan matang.
+<br> 2. Haluskan semua bumbu yang sudah disangrai hingga benar-benar halus.
+<br> 3. Panaskan sedikit minyak, tumis bumbu halus hingga harum.
+<br> 4. Tambahkan gula merah, garam, dan air asam jawa. Aduk rata hingga bumbu mengental dan meresap.
+<br> 5. Cicipi bumbu, tambahkan gula atau garam sesuai selera.
+<br> 6. Rebus semua sayuran hingga matang dan masih sedikit renyah.
+<br> 7. Tata nasi putih hangat di atas piring, kemudian tata sayuran rebus di atasnya. Siram dengan bumbu pecel. Tambahkan tempe goreng, tahu goreng, dan kerupuk. Tambahkan kecap manis Less Sugar Bango secukupnya sesuai selera.`
+    },
+
+    { name: "Semur Hati Ayam", 
+      image: "semur hati ayam.svg", 
+      bahan: "hati ayam, jeruk nipis, kecap manis, pala, jahe, lengkuas, cengkeh, serai, cabai merah keriting, tomat", 
+      resep: `Bahan-bahan:
+<br> 680 g (12 buah) hati ayam
+<br> 1/4 sdt air jeruk nipis
+<br> 3 sdm kecap manis Less Sugar Bango
+<br> 1/2 sdt garam
+<br> 1/4 merica bubuk
+<br> 3/4 sdt pala bubuk
+<br> 2 cm jahe, memarkan
+<br> cm lengkuas, memarkan
+<br> 5 buah cengkeh utuh, memarkan
+<br> 2 buah serai, memarkan
+<br> 400 ml air
+<br> 8 butir bawang merah
+<br> 3 siung bawang putih
+<br> 5 buah cabai merah keriting
+<br> 1 buah tomat
+<br>
+<br>
+Cara Membuat:
+<br> 1. Lumuri hati ayam dengan air jeruk nipis. Diamkan 15 menit.
+<br> 2. Campur bumbu halus,kecap manis Less Sugar Bango, garam, merica, dan pala bubuk sampai rata.
+<br> 3. Lumuri pada hati ayam. Diamkan 30 menit.
+<br> 4. Masak hati bersama bumbu lumurannya di dalam wajan. Aduk rata. Tambahkan jahe, lengkuas, cengkeh, dan serai. Aduk sebentar.`
+    },
+
+    { name: "Tumis Udang Buncis", 
+      image: "tumis udang buncis.svg", 
+      bahan: "buncis, udang, bawang merah, bawang putih, cabai merah, lengkuas, daun salam, kecap manis, kaldu bubuk", 
+      resep: `Bahan-bahan:
+<br> 250 gram buncis, potong-potong
+<br> 150 gram udang, bersihkan dan buang kulit
+<br> 3 siung bawang merah, iris tipis
+<br> 2 siung bawang putih, iris tipis
+<br> 2 buah cabai merah keriting, iris serong (sesuai selera)
+<br> 1 ruas lengkuas, memarkan
+<br> 1 lembar daun salam
+<br> 2 sendok makan kecap manis Less Sugar Bango
+<br> Garam secukupnya
+<br> Kaldu bubuk secukupnya
+<br> Minyak goreng secukupnya
+<br>
+<br>
+Cara Membuat:
+<br> 1. Panaskan sedikit minyak goreng dalam wajan, tumis bawang merah dan bawang putih hingga harum.
+<br> 2. Masukkan cabai merah, lengkuas, dan daun salam. Tumis hingga bumbu harum dan matang.
+<br> 3. Masukkan buncis, aduk rata. Tumis hingga buncis agak layu.
+<br> 4. Masukkan udang, masak hingga udang berubah warna menjadi merah muda dan matang.
+<br> 5. Tambahkan kecap manis Less Sugar Bango, garam, dan kaldu bubuk. Aduk rata hingga bumbu meresap.
+<br> 6. Cicipi dan sesuaikan rasa sesuai selera.
+<br> 7. Angkat tumisan dan sajikan selagi hangat.`
+    }
+
+  ];
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+  }, { threshold: 0.1 });
+
+  function displayRecipes(list) {
+    const container = document.getElementById("recipeList");
+    container.innerHTML = "";
+    if (list.length === 0) {
+      container.innerHTML = "<p class='text-center'>Tidak ada menu ditemukan.</p>";
+      return;
+    }
+
+    list.forEach(r => {
+      const card = document.createElement("div");
+      card.className = "recipe-card fade-up";
+      card.innerHTML = `
+        <img src="${r.image}" alt="${r.name}" onerror="this.onerror=null;this.src='https://via.placeholder.com/180x180?text=Gambar+Tidak+Ada'">
+        <div class="recipe-info">
+          <div class="recipe-title">${r.name}</div>
+          <div class="recipe-details">${r.resep}</div>
+        </div>
+      `;
+      card.addEventListener("click", () => {
+        const detail = card.querySelector(".recipe-details");
+        const isOpen = detail.style.display === "block";
+        document.querySelectorAll(".recipe-details").forEach(d => d.style.display = "none");
+        detail.style.display = isOpen ? "none" : "block";
+      });
+      container.appendChild(card);
+      observer.observe(card);
+    });
+  }
+
+  document.getElementById("searchInput").addEventListener("input", e => {
+    const keyword = e.target.value.toLowerCase().trim();
+    if (keyword === "") return displayRecipes(recipes);
+    const filtered = recipes.filter(r => 
+      r.bahan.toLowerCase().includes(keyword) || r.name.toLowerCase().includes(keyword)
+    );
+    displayRecipes(filtered);
+  });
+
+  displayRecipes(recipes);
+  document.querySelectorAll(".fade-up").forEach(el => observer.observe(el));
+});
+</script>
+</body>
+</html>

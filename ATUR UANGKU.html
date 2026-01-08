@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atur Uangku - Teman Ibu</title>
+
+<!-- Font dan Bootstrap -->
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  /* Background utama */  
+body {
+  background: linear-gradient(to bottom, #FFEACF 0%, #FFF2E1 100%);
+  font-family: 'Quicksand', sans-serif;
+  color: #6B645C;
+  margin: 0;
+  padding: 0;
+}
+
+/* HEADER */
+.header {
+  background-color: #FFDAEA; /* Warna dasar tetap */
+  background-image: url('BG2.svg'); /* Tambah background hiasan */
+  background-repeat: no-repeat;
+  background-size: cover; /* Menutupi seluruh area header */
+  background-position: center; /* Posisi tengah */
+  text-align: center;
+  padding: 20px 0; /* Ukuran tetap seperti sebelumnya */
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* bayangan */
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 218, 234, 0.6);
+  z-index: 0;
+}
+
+.header img {
+  position: relative;
+  z-index: 1;
+}
+
+/* NAVBAR */
+.navbar-custom {
+  background-color: #FFF2E1;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.navbar-custom a {
+    margin: 0 35px; }
+
+.navbar-custom img {
+  width: 170px; 
+  height: 90px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+.navbar-custom img:hover {
+  transform: translateY(-5px) scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* CONTAINER */
+.content-section {
+  position: relative;
+  background: linear-gradient(to bottom, #FFEACF 0%, #FFF2E1 100%);
+  overflow: hidden;
+}
+
+.content-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('BG1.svg') repeat center/cover;
+  opacity: 0.4; 
+  z-index: 0;
+}
+
+.content-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* CONTAINER */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1000px;
+  margin: 50px auto;
+  background: rgba(255, 248, 242, 0.92);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+h2 {
+  text-align: center;
+  color: #D17C7C;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.section-title {
+  background: #FFD6C0;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* BUTTONS */
+button {
+  background-color: #FFB6C1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 25px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover { background-color: #ff95ad; }
+
+/* HASIL */
+#hasilSection {
+  display: none;
+  margin-top: 40px;
+  background: #fffaf5;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+#hasilText {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+#hasilText p { margin: 6px 0; }
+
+#tabungan, #pengeluaran { font-weight: bold; }
+
+#chartContainer {
+  text-align: center;
+  margin-top: 30px;
+}
+#pieChart {
+  width: 400px;
+  height: 400px;
+  margin: auto;
+}
+
+/* FOOTER */
+footer {
+  background: #FFEACF;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: 50px;
+  position: relative;
+}
+
+footer img { max-width: 100%; }
+
+footer .social-icons a {
+  margin: 0 15px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+footer .social-icons a:hover { transform: scale(1.2); }
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.9s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+</style>
+</head>
+
+
+<body>
+<!-- HEADER -->
+<div class="header">
+  <a href="index.html"><img src="LOGO HEADER.svg" alt="Logo Header" width="78" height="78"></a>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar-custom">
+  <a href="TENTANG.html"><img src="Tentang Teman Ibu - OFF.svg" data-hover="Tentang Teman Ibu - ON.svg" alt=""></a>
+  <a href="HEMAT YUK!.html"><img src="Hemat Yuk! - OFF.svg" data-hover="Hemat Yuk! - ON.svg" alt=""></a>
+  <a href="ATUR UANGKU.html"><img src="Atur Uangku - ON.svg" alt=""></a>
+  <a href="RUANG KELUARGA.html"><img src="Ruang Keluarga - OFF.svg" data-hover="Ruang Keluarga - ON.svg" alt=""></a>
+  <a href="DAPUR IBU.html"><img src="Dapur Ibu - OFF.svg" data-hover="Dapur Ibu - ON.svg" alt=""></a>
+</nav>
+
+<!-- MAIN CONTENT -->
+<section class="content-section fade-up">
+  <div class="container fade-up">
+   <h2 class="fade-up"> Kalkulator Anggaran Rumah Tangga</h2>
+
+  <div class="section-title fade-up">Penghasilan Rumah Tangga</div>
+  <input type="number" id="penghasilan" placeholder="Masukkan penghasilan bulanan (Rp)">
+
+  <div class="section-title fade-up">Rumah Tangga</div>
+  <div class="row fade-up">
+    <div class="col-md-3"><input type="number" id="makanan" placeholder="Makanan (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="sewa" placeholder="Sewa/Cicilan (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="tagihan" placeholder="Tagihan (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="lainnya_rt" placeholder="Lainnya (Rp)"></div>
+  </div>
+
+  <div class="section-title fade-up">Gaya Hidup</div>
+  <div class="row fade-up">
+    <div class="col-md-3"><input type="number" id="belanja" placeholder="Belanja (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="hiburan" placeholder="Hiburan (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="langganan" placeholder="Langganan (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="liburan" placeholder="Liburan (Rp)"></div>
+  </div>
+
+  <div class="section-title fade-up">Transportasi</div>
+  <div class="row fade-up">
+    <div class="col-md-3"><input type="number" id="umum" placeholder="Transportasi Umum (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="bensin" placeholder="Bensin (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="perawatan" placeholder="Perawatan (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="lainnya_tr" placeholder="Lainnya (Rp)"></div>
+  </div>
+
+  <div class="section-title fade-up">Pendidikan</div>
+  <div class="row fade-up">
+    <div class="col-md-3"><input type="number" id="sekolah" placeholder="Uang Sekolah (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="saku" placeholder="Uang Saku (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="ekstra" placeholder="Ekstrakurikuler (Rp)"></div>
+    <div class="col-md-3"><input type="number" id="lainnya_pd" placeholder="Lainnya (Rp)"></div>
+  </div>
+
+  <div class="section-title fade-up">Pengeluaran Tetap Lainnya</div>
+  <div class="row fade-up">
+    <div class="col-md-4"><input type="number" id="bantu" placeholder="Membantu (Rp)"></div>
+    <div class="col-md-4"><input type="number" id="asuransi" placeholder="Asuransi (Rp)"></div>
+    <div class="col-md-4"><input type="number" id="lainnya_tp" placeholder="Lainnya (Rp)"></div>
+  </div>
+
+  <div class="text-center mt-4 fade-up">
+    <button onclick="hitungAnggaran()">Hitung hasilnya</button>
+  </div>
+
+  <div id="hasilSection">
+    <div id="hasilText">
+      <p><b>Berikut ini adalah gambaran penghasilan dan pengeluaran Anda.</b></p>
+      <p>Area kuning memperlihatkan tambahan tabungan yang dapat Anda gunakan untuk memaksimalkan potensi pertumbuhan kekayaan.</p>
+      <p id="tabungan">Total tabungan bulanan:</p>
+      <p id="pengeluaran">Total pengeluaran bulanan:</p>
+    </div>
+
+    <div id="chartContainer">
+      <canvas id="pieChart"></canvas>
+    </div>
+
+    <div class="text-center mt-3">
+      <button onclick="resetForm()">Hitung Ulang</button>
+    </div>
+   </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="mt-5">
+  <img src="Footer.svg" alt="Footer" usemap="#Map">
+  <map name="Map">
+    <area shape="rect" coords="849,78,906,133" href="https://www.instagram.com/" target="_blank" alt="-">
+    <area shape="rect" coords="1041,79,1118,136" href="https://www.youtube.com" target="_blank" alt="-">
+    <area shape="rect" coords="846,155,907,211" href="https://x.com" target="_blank" alt="-">
+    <area shape="rect" coords="1048,152,1116,210" href="https://facebook.com" target="_blank" alt="-">
+  </map>
+
+  <div class="social-icons mt-3">
+    <a href="https://www.instagram.com/" target="_blank"><img src="instagram.png" width="40"  alt="-"></a>
+    <a href="https://www.youtube.com/" target="_blank"><img src="youtube.png" width="40"  alt="-"></a>
+    <a href="https://x.com/" target="_blank"><img src="twitter.png" width="40"  alt="-"></a>
+    <a href="https://facebook.com/" target="_blank"><img src="facebook.png" width="40"  alt="-"></a>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, {threshold: 0.1});
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+let chartInstance = null;
+
+function hitungAnggaran() {
+  const penghasilan = +document.getElementById("penghasilan").value || 0;
+  const ids = [
+    "makanan","sewa","tagihan","lainnya_rt",
+    "belanja","hiburan","langganan","liburan",
+    "umum","bensin","perawatan","lainnya_tr",
+    "sekolah","saku","ekstra","lainnya_pd",
+    "bantu","asuransi","lainnya_tp"
+  ];
+
+  let totalPengeluaran = 0;
+  let dataKategori = [];
+
+  ids.forEach(id => {
+    const val = +document.getElementById(id).value || 0;
+    if (val > 0) {
+      totalPengeluaran += val;
+      dataKategori.push({label: id.replace(/_/g,' '), value: val});
+    }
+  });
+
+  const totalTabungan = penghasilan - totalPengeluaran;
+  document.getElementById("hasilSection").style.display = "block";
+
+  const pengeluaranText = document.getElementById("pengeluaran");
+  const tabunganText = document.getElementById("tabungan");
+  pengeluaranText.textContent = `Total pengeluaran bulanan: Rp ${totalPengeluaran.toLocaleString()}`;
+  tabunganText.textContent = `Total tabungan bulanan: Rp ${totalTabungan.toLocaleString()}`;
+  pengeluaranText.style.color = totalPengeluaran > penghasilan ? "red" : "green";
+  tabunganText.style.color = totalTabungan < 0 ? "red" : "#6B645C";
+
+  const ctx = document.getElementById('pieChart').getContext('2d');
+  if (chartInstance) chartInstance.destroy();
+
+  if (totalTabungan >= 0 && (dataKategori.length > 0 || totalTabungan > 0)) {
+    const colors = [
+      '#FF9AA2','#FFB7B2','#FFDAC1','#E2F0CB','#B5EAD7','#C7CEEA',
+      '#F6D186','#F3C5FF','#B0E0E6','#FFD1BA','#A9E5BB','#FFC9DE',
+      '#D7E9F7','#E7D9EA','#FFBEA3','#E0BBE4','#FF9CEE','#FAD6A5'
+    ];
+
+    const labels = dataKategori.map(k => k.label);
+    const values = dataKategori.map(k => k.value);
+    const bgColors = colors.slice(0, dataKategori.length);
+
+    // Tambahkan total tabungan di pie chart (warna wajib kuning)
+    if (totalTabungan > 0) {
+      labels.push("Tabungan");
+      values.push(totalTabungan);
+      bgColors.push("#FFD93D");
+    }
+
+    chartInstance = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: values,
+          backgroundColor: bgColors
+        }]
+      },
+      options: {
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const val = context.raw;
+                const total = values.reduce((a,b) => a+b,0);
+                const percent = ((val / total) * 100).toFixed(1);
+                return `${context.label}: Rp ${val.toLocaleString()} (${percent}%)`;
+              }
+            }
+          },
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+  } else {
+    ctx.clearRect(0, 0, 400, 400);
+  }
+}
+
+function resetForm() {
+  document.querySelectorAll('input[type="number"]').forEach(i => i.value = '');
+  document.getElementById("hasilSection").style.display = "none";
+  if (chartInstance) chartInstance.destroy();
+}
+</script>
+</body>
+</html>
