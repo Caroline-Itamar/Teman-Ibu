@@ -307,7 +307,40 @@ footer .social-icons a:hover {
   }
 }
 
-	
+@media (max-width: 768px) {
+
+  /* PENTING: SCOPE KE CONTAINER CARD
+     GANTI .tips-grid sesuai container kamu */
+  .tips-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .tips-grid .tip {
+    height: auto !important;
+    perspective: none !important;
+  }
+
+  .tips-grid .tip-inner {
+    position: relative !important;
+    height: auto !important;
+    transform: none !important;
+  }
+
+  .tips-grid .tip-front,
+  .tips-grid .tip-back {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    backface-visibility: visible !important;
+    height: auto !important;
+  }
+
+  /* PAKSA KONTEN BACK KELUAR */
+  .tips-grid .tip-back {
+    display: block !important;
+  }
+}	
 </style>
 </head>
 
@@ -520,6 +553,7 @@ document.querySelectorAll('.tip').forEach(tip => {
 </body>
 
 </html>
+
 
 
 
