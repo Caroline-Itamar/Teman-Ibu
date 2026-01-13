@@ -208,139 +208,35 @@ footer .social-icons a:hover {
 }
 
 @media (max-width: 768px) {
-
-  /* NAVBAR */
   .navbar-custom {
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    flex-wrap: nowrap;        /* JANGAN TURUN KE BAWAH */
+    overflow-x: auto;         /* BISA SCROLL KE SAMPING */
     justify-content: flex-start;
-    padding: 8px 10px;
+    padding: 10px;
   }
 
   .navbar-custom a {
-    margin: 0 12px;
+    margin: 0 15px;
     flex: 0 0 auto;
   }
 
   .navbar-custom img {
-    width: 115px;
+    width: 120px;             /* diperkecil agar muat HP */
     height: auto;
   }
 
+  /* Hilangkan scrollbar jelek */
   .navbar-custom::-webkit-scrollbar {
     display: none;
-  }
-
-  /* GRID & CARD */
-  .tips-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .tip-inner {
-    height: auto;
-    min-height: 200px;
-  }
-
-  .tip-front,
-  .tip-back {
-    position: relative;
-    height: auto;
-  }
-
-  .tip-front h4 {
-    top: 0;
-    transform: none;
-    padding-top: 40px;
-  }
-
-  .tip-back p {
-    font-size: 14px;
-  }
-}
+  }	
 
 @media (max-width: 768px) {
-
-  /* GRID */
-  .tips-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* CARD WRAPPER */
-  .tip {
-    perspective: none;
-  }
-
-  /* CARD BODY */
-  .tip-inner {
-    height: auto;
-    transform: none !important;
-  }
-
-  /* FRONT & BACK JADI SATU ALUR */
-  .tip-front,
-  .tip-back {
-    position: relative;
-    height: auto;
-    backface-visibility: visible;
-    transform: none;
-  }
-
-  /* SEMBUNYIKAN BACK SECARA DEFAULT */
-  .tip-back {
-    display: none;
-  }
-
-  /* SAAT DIKLIK */
-  .tip.flipped .tip-back {
-    display: block;
-  }
-
-  .tip.flipped .tip-front {
-    display: none;
-  }
-
-  .tip-front h4 {
-    position: static;
-    transform: none;
-    padding: 30px 10px;
-    text-align: center;
+  .card {
+    height: auto !important;
+    overflow: visible;
   }
 }
-
-@media (max-width: 768px) {
-
-  /* PENTING: SCOPE KE CONTAINER CARD
-     GANTI .tips-grid sesuai container kamu */
-  .tips-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-
-  .tips-grid .tip {
-    height: auto !important;
-    perspective: none !important;
-  }
-
-  .tips-grid .tip-inner {
-    position: relative !important;
-    height: auto !important;
-    transform: none !important;
-  }
-
-  .tips-grid .tip-front,
-  .tips-grid .tip-back {
-    position: relative !important;
-    inset: auto !important;
-    transform: none !important;
-    backface-visibility: visible !important;
-    height: auto !important;
-  }
-
-  /* PAKSA KONTEN BACK KELUAR */
-  .tips-grid .tip-back {
-    display: block !important;
-  }
-}	
+	
 </style>
 </head>
 
@@ -511,54 +407,51 @@ footer .social-icons a:hover {
 </footer>
 
 <script>
-let activeTip = null;
-
-document.querySelectorAll('.tip').forEach(tip => {
-
-  const isMobile = window.innerWidth <= 768;
-
-  if (!isMobile) {
-    // DESKTOP — HOVER
-    tip.addEventListener('mouseenter', () => {
-      if (activeTip && activeTip !== tip) {
-        activeTip.classList.remove('flipped');
-      }
-      tip.classList.add('flipped');
-      activeTip = tip;
-    });
-
-    tip.addEventListener('mouseleave', () => {
-      tip.classList.remove('flipped');
-      activeTip = null;
-    });
-  } else {
-    // MOBILE — TAP
-    tip.addEventListener('click', () => {
-      if (activeTip === tip) {
-        tip.classList.remove('flipped');
-        activeTip = null;
-      } else {
-        if (activeTip) activeTip.classList.remove('flipped');
-        tip.classList.add('flipped');
-        activeTip = tip;
-      }
-    });
+document.querySelectorAll('.navbar-custom img').forEach(img => {
+  const original = img.src;
+  const hover = img.getAttribute('data-hover');
+  if (hover) {
+    img.addEventListener('mouseenter', () => img.src = hover);
+    img.addEventListener('mouseleave', () => img.src = original);
   }
 });
+
+let activeTip = null;
+document.querySelectorAll('.tip').forEach(tip => {
+  tip.addEventListener('mouseenter', () => {
+    if (activeTip && activeTip !== tip) activeTip.classList.remove('flipped');
+    tip.classList.add('flipped');
+  });
+
+  tip.addEventListener('mouseleave', () => {
+    if (tip !== activeTip) tip.classList.remove('flipped');
+  });
+
+  tip.addEventListener('click', () => {
+    if (activeTip === tip) {
+      activeTip = null;
+      tip.classList.remove('flipped');
+    } else {
+      if (activeTip) activeTip.classList.remove('flipped');
+      activeTip = tip;
+    }
+  });
+});
+
+
+// Fade-in scroll
+function handleScroll() {
+  document.querySelectorAll('.fade-in').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) {
+      el.classList.add('visible');
+    }
+  });
+}
+window.addEventListener('scroll', handleScroll);
+window.addEventListener('load', handleScroll);
 </script>
-
-
-
 
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
