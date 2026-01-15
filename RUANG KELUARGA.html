@@ -267,6 +267,30 @@ footer .social-icons a:hover {
   .navbar-custom::-webkit-scrollbar {
     display: none;
   }
+
+/* =========================
+   FIX TESTIMONI – MOBILE ONLY
+   ========================= */
+@media (max-width: 768px) {
+
+  .testimoni-container {
+    animation: none;              /* MATIKAN ANIMASI */
+    width: 100%;
+    overflow-x: auto;             /* SCROLL MANUAL */
+    padding-bottom: 10px;
+  }
+
+  .testimoni {
+    min-width: 260px;             /* UKURAN AMAN HP */
+    font-size: 14px;
+  }
+
+  /* hilangkan scrollbar jelek */
+  .testimoni-container::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 	
 </style>
 </head>
@@ -428,4 +452,5 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
+
 
